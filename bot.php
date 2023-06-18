@@ -6,7 +6,7 @@ if (file_exists('data.json')) {
     $member_code = $data['member_code'] ?? '';
     $signature = $data['signature'] ?? '';
     $key = $data['key'] ?? '';
-$kunci = $key;
+    $secret = $key;
 } else {
     $member_code = '';
     $signature = '';
@@ -26,7 +26,7 @@ if (!$key) {
 echo "Enter secret key: ";
 $key = trim(fgets(STDIN));
 }
-                                                              // Save data to data.json file
+// Save data to data.json file
 $data = [
     'member_code' => $member_code,
     'signature' => $signature,
@@ -35,7 +35,7 @@ $data = [
 file_put_contents('data.json', json_encode($data, JSON_PRETTY_PRINT));
 // membuat URL request
 $urlcek = 'https://api.tokovoucher.id/member?member_code=' . $member_code . '&signature=' . $signature;
-                                                              // melakukan request ke API
+// melakukan request ke API
 $response = file_get_contents($urlcek);
 
 // mengambil data JSON dari response
@@ -181,9 +181,11 @@ $selectedlistproduc = $listproduc[$listproducIndex-1];
 echo "Kode : " . $selectedlistproduc['code'] . "\n";
 echo "Product :  " . $selectedlistproduc['nama_produk'] . "\n";
 echo "Harga: RP " . number_format($selectedlistproduc['price'], 0, ',', '.') . "\n";
+$status = ($selectedlistproduc["status"] == 1) ? 'Tersedia' : 'Gangguan !!';
+echo "Status   : " . $status . "\n";
 $produk = $selectedlistproduc['code'];
 
-$secret = $kunci;
+//$secret = $kunci;
 $ref_id = "REF" .date('YmdHis') ."WAYAN";
 echo $ref_id ."\n";
 echo "Input tujuan: ";
@@ -230,4 +232,3 @@ else{
 }
 
 ?>
-
